@@ -1,0 +1,19 @@
+.formcenter {
+    margin-top: 20px;
+}
+.formheader {
+    color: grey;
+    margin-top: 45px;
+    text-align: center;
+}
+.border {
+    align-content: center;
+}
+
+.headerlabel {
+    color:blue;
+    text-align: left;
+}
+.submit {
+    align: center;
+}
