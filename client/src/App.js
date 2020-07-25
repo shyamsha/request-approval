@@ -6,6 +6,8 @@ import Account from './components/users/Account'
 import RequestForm from './components/RegisterForm/RequestForm'
 import RequestPending from './components/RegisterForm/RequestPending'
 import RequestApproved from './components/RegisterForm/RequestApproved'
+import RequestRejected from './components/RegisterForm/RequestRejected'
+
 import axios from 'axios'
 
 
@@ -55,6 +57,7 @@ class App extends React.Component{
                 <li> <Link to="/requestform/view">Form</Link></li>
                 <li> <Link to ="/requestform/pending">Pending</Link></li>
                 <li><Link to="/requestform/approved">Approved</Link></li>
+                <li><Link to="/requestform/rejected">Rejected></Link></li>
                 <li> <Link to ="/requestform/for-approval">Request for Approval</Link></li>
 
                 
@@ -85,6 +88,8 @@ class App extends React.Component{
           <Route path ="/requestform/view" component={RequestForm}/>
           <Route path='/requestform/pending' component={RequestPending}/>
           <Route path='/requestform/approved' component={RequestApproved}/>
+          <Route path='/requestform/rejected' component={RequestRejected}/>
+          
           <Route path="/users/logout" render={(props) => {
               axios.delete('http://localhost:3005/users/logout', {
                 headers: {

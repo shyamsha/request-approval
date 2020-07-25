@@ -1,12 +1,12 @@
 import React from 'react'
 import axios from 'axios'
 
-class RequestPending extends React.Component
+class RequestRejected extends React.Component
 {
     constructor() {
         super()
         this.state={
-            pendingForms:[]
+            rejectedForms:[]
 
         }
     }
@@ -21,16 +21,16 @@ class RequestPending extends React.Component
             //console.log(response.data,'in list response')
 
             this.setState(()=>({
-                pendingForms:response.data
+                rejectedForms:response.data
             }))
         })
     }
      render()
     {
-        console.log(this.state.pendingForms)
+        console.log(this.state.rejectedForms)
         return(
             <div>
-                <h1>In Request Pending </h1>
+                <h1> Rejected Forms </h1>
                 
         <table border="2">
         <thead>
@@ -45,7 +45,7 @@ class RequestPending extends React.Component
 
         <tbody>
         {
-          this.state.pendingForms.filter(((reqForm)=>reqForm.status==='pending')).map(form =>{
+          this.state.rejectedForms.filter(((reqForm)=>reqForm.status==='rejected')).map(form =>{
             return (
               <tr key ={form._id}>
                 <td> { form.createdBy.username } </td>
@@ -66,4 +66,4 @@ class RequestPending extends React.Component
         
     }
 }
-export default RequestPending
+export default RequestRejected

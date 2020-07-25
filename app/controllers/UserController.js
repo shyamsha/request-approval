@@ -34,7 +34,7 @@ router.get('/account',(req,res)=>{
     const {user}=req
   
     console.log('in account')
-    res.send(JSON.stringify({ message: 'Every message requires an author' }));
+    //res.send(JSON.stringify({ message: 'Every message requires an author' }));
     res.send(user)
 })
 

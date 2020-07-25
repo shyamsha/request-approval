@@ -26,7 +26,7 @@ router.post('/create', authenticateUser,async(req,res)=>{
 router.get('/view',authenticateUser,(req,res)=>{
         // console.log(req.user,'in view')
     const user=req.user
-    RequestForm.find().populate('assignedUser','username').populate('assignedDepartment','department')
+    RequestForm.find().populate('assignedUser','username').populate('assignedDepartment','department').populate('createdBy','username')
     .then(requestform=>{
         let filteredForm=[]
         for (let i=0;i<requestform.length;i++){
