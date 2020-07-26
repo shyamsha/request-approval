@@ -60,7 +60,7 @@ class App extends React.Component{
                 <li> <Link to="/requestform/view">Form</Link></li>
                 <li> <Link to ="/requestform/pending">Pending</Link></li>
                 <li><Link to="/requestform/approved">Approved</Link></li>
-                <li><Link to="/requestform/rejected">Rejected></Link></li>
+                <li><Link to="/requestform/rejected">Rejected</Link></li>
                 <li> <Link to ="/requestform/for-approval">Request for Approval</Link></li>
 
                 
