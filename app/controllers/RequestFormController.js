@@ -21,20 +21,21 @@ router.post('/create', authenticateUser,async(req,res)=>{
           res.send({'error':'cannot request a user of the same department'})
       }
    
-//    console.log('in bodyof create')
+
 })
 router.get('/view',authenticateUser,(req,res)=>{
-        // console.log(req.user,'in view')
+       
     const user=req.user
     RequestForm.find().populate('assignedUser','username').populate('assignedDepartment','deptName').populate('createdBy','username')
     .then(requestform=>{
         let filteredForm=[]
         for (let i=0;i<requestform.length;i++){
-            if(requestform[i].createdBy.toString()==user._id.toString() || user._id.toString()===requestform[i].assignedUser._id.toString() || ((requestform[i].assignedDepartment._id.toString()===user.department.toString()) && (requestform[i].status!=='approved')) ){
+           
+            if(requestform[i].createdBy._id.toString()===user._id.toString() || user._id.toString()===requestform[i].assignedUser._id.toString() || ((requestform[i].assignedDepartment._id.toString()===user.department.toString()) && (requestform[i].status!=='approved')) ){
                 filteredForm.push(requestform[i])
                  
         }
-        console.log(requestform)
+        
     }
         
 
@@ -46,7 +47,7 @@ router.get('/view',authenticateUser,(req,res)=>{
 
 })
 router.get('/view/pendingapproval',authenticateUser,(req,res)=>{
-    // console.log(req.user,'in view')
+
 const user=req.user
 RequestForm.find().populate('assignedUser','username').populate('assignedDepartment','deptName').populate('createdBy','username')
 .then(requestform=>{

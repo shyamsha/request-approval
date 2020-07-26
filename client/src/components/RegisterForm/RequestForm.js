@@ -12,12 +12,15 @@ class RequestForm extends React.Component
         departmentArray:[],
         userArray:[],
         user:'',
-        message:''
+        message:'',
+        loggedInUser:{}
         }
     }
     componentDidMount()
     {
-      axios.get('http://localhost:3005/department/allDepartments',{
+    
+
+        axios.get('http://localhost:3005/department/allDepartments',{
           headers:{
               'x-auth':localStorage.getItem('token')
           }
@@ -44,10 +47,25 @@ class RequestForm extends React.Component
               
           }))
     })
+    axios.get('http://localhost:3005/users/loggedinuser',{
+        headers:{
+            'x-auth':localStorage.getItem('token')
+        }
+      })
+
+    .then((response)=>{
+        //console.log(response,'in category')
+        this.setState(()=>({
+            loggedInUser:response.data
+            
+        }))
+    })
     }
     handleChange=(e)=>{
         e.persist()
-        //console.log(e)
+        //console.log(this.state.department)
+        //this.selectedValue=e.target.value
+        //console.log('tt',this.selectedValue)
         this.setState(()=>({
           [e.target.name] : e.target.value   
         }))
@@ -94,54 +112,36 @@ class RequestForm extends React.Component
 
     }
     render() {
-        //console.log(this.state.departmentArray)
+        console.log(this.state.departmentArray)
         return(
             <fieldset>
                  <h2 className="formheader">Send the request to another Department </h2>
             <div className="form-group">
                 <form onSubmit={this.handleSubmit} className="formcenter">
-                    
                 <div className="form-row">
+
+
                     <div className="form-group col-md-4"></div>
-                    {/* <div className="form-group col-md-4">
-                    <label className="headerlabel">Username 
-                        <input 
-                        type="text" 
-                        name="createdBy"
-                        value={this.state.createdBy} 
-                        onChange={this.handleChange} 
-                        className="form-control" 
-                        placeholder="Enter username"
-                        //    className="form-control"
-                        />
-                    </label>
-                    </div> */}
+                    <div className="form-group col-md-4">
 
-                {/* <div className="form-group col-md-4"></div>
-                    <div className="form-group col-md-4"></div> */}
-                    <div className="form-group col-md-2">
-                    <label className="headerlabel">Created by user
-                        <select name="createdBy" value={this.state.createdBy} onChange={this.handleChange} className="form-control">
+                    <label className="headerlabel">Username(Created By) 
+                    <select name="createdBy" value={this.state.createdBy} onChange={this.handleChange} className="form-control">
                             <option value="" >Select</option>
-                            {this.state.userArray.map((user)=>{
-                                
+                            <option value={this.state.loggedInUser._id} >{this.state.loggedInUser.username}</option>
+                           
 
-                            return <option key={user._id}
-                            value={user._id}>{user.username}</option>
-                        })}
                         </select>
                     </label>
                     </div>
 
-
-
+                    
                     <div className="form-group col-md-4"></div>
                     <div className="form-group col-md-4"></div>
                     <div className="form-group col-md-2">
                     <label className="headerlabel">Department(to assign) 
                         <select name="department" value={this.state.department} onChange={this.handleChange} className="form-control">
                             <option value="" >Select</option>
-                            {this.state.departmentArray.map((department)=>{
+                            {this.state.departmentArray.filter(((department)=>department._id!==this.state.loggedInUser.department)).map((department)=>{
                                 
 
                             return <option key={department._id}
@@ -154,7 +154,7 @@ class RequestForm extends React.Component
                     <label className="headerlabel">User (to assign)
                         <select name="user"   value={this.state.user}   onChange={this.handleChange} className="form-control">
                             <option value="">Select</option>
-                            {this.state.userArray.map((user)=>{
+                            {this.state.userArray.filter(((user)=>user.department===this.state.department)).map((user)=>{
                             return <option key={user._id}
                             value={user._id}>{user.username}</option>
                         })}

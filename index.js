@@ -1,19 +1,25 @@
-const express=require('express')
-// const app=express()
+
+ 
  const cors=require('cors')
 
-var app = require('express')();
-var http = require('http').createServer(app);
-var io = require('socket.io')(http);
+
+ const socket = require("socket.io")
+var http = require('http')
+const express=require('express')
+
+
+const app=express()
+const server= http.createServer(app)
+
+const io = socket(server);
+
 
 
 
 const port=3005
 const {mongoose}=require('./config/database')
 const {routes}=require('./config/routes')
-var io = require('socket.io')(http);
-var http = require('http').createServer(app);
-var io = require('socket.io')(http);
+
 
 app.use(express.json())
 app.use(cors())
@@ -25,10 +31,18 @@ app.use('/',routes)
 // })
 
 
-io.on('connection', (socket) => {
-    console.log('a user connected');
-  });
+// io.on('connection', (socket) => {
+//     console.log('a user connected');
+//   });
+
+
+io.on("connection", socket => {
+    socket.emit("your id", socket.id);
+    socket.on("send message", body => {
+        io.emit("message", body)
+    })
+})
   
-  http.listen(port, () => {
+  server.listen(port, () => {
     console.log('listening on port',port);
   });

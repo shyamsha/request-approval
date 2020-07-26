@@ -19,11 +19,6 @@ router.get('/allDepartments',authenticateUser,async function(req,res){
     
     
     let allDepartments =await Department.find()
-    // allUsers.forEach((user)=>{
-    //     users.push(user.username)   
-    // })
-    //users=[...new Set(users)]
-    //console.log(users)
     return res.send(allDepartments)
 
 })

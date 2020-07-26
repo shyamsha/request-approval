@@ -61,18 +61,37 @@ router.get('/allUsers', authenticateUser,async function(req,res){
 
 })
 
-router.get('/allUsers',authenticateUser,async function(req,res){
-    
-    let users=[]
-    let allUsers =await User.find()
-    // allUsers.forEach((user)=>{
-    //     users.push(user.username)   
-    // })
-    //users=[...new Set(users)]
-    //console.log(users)
-    return res.send(allUsers)
+router.get('/loggedinuser', authenticateUser,async function(req,res){
+
+    const {user,token}=req
+    //console.log(token)
+
+    try{
+    let users=await User.find()
+
+    users.forEach((user)=>{
+        
+        user.tokens.forEach((token)=>{
+            //console.log(token.token)
+            if(token.token===req.token){
+                return res.send(user)
+            }
+        })
+        
+    })
+    }catch(e){
+        return res.send(e,{msg:'error'})
+    }
 
 })
+
+// router.get('/allUsers',authenticateUser,async function(req,res){
+    
+//     let users=[]
+//     let allUsers =await User.find()
+//     return res.send(allUsers)
+
+// })
 
 module.exports={
     usersRouter:router

@@ -3,8 +3,8 @@ import axios from 'axios'
 
 class RequestPending extends React.Component
 {
-    constructor() {
-        super()
+    constructor(props) {
+        super(props)
         this.state={
             pendingForms:[]
 
@@ -18,7 +18,7 @@ class RequestPending extends React.Component
             }
         })
         .then(response=>{
-            //console.log(response.data,'in list response')
+            console.log(response.data)
 
             this.setState(()=>({
                 pendingForms:response.data
@@ -45,7 +45,7 @@ class RequestPending extends React.Component
 
         <tbody>
         {
-          this.state.pendingForms.filter(((reqForm)=>reqForm.status==='pending')).map(form =>{
+          this.state.pendingForms.filter(((reqForm)=>reqForm.status==='pending') ).map(form =>{
             return (
               <tr key ={form._id}>
                 <td> { form.createdBy.username } </td>

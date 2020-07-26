@@ -43,7 +43,7 @@ class RequestApproved extends React.Component
           </tr>
         </thead>
 
-        <tbody>
+        <tbody> 
         {
           this.state.approvedForms.filter(((reqForm)=>reqForm.status==='approved')).map(form =>{
             return (
@@ -58,6 +58,8 @@ class RequestApproved extends React.Component
             )
           })
         }
+
+        
         </tbody>
         </table>
         </div>
