@@ -1,10 +1,11 @@
 import React from 'react'
 // import Rout from './routes'
+import axios from 'axios'
 import form from './form.css';
 class RequestForm extends React.Component
 {
-    constructor() {
-        super()
+    constructor(props) {
+        super(props)
         this.state={
         createdBy:'',
         department:'',
@@ -16,21 +17,37 @@ class RequestForm extends React.Component
     }
     componentDidMount()
     {
-      axios.get('http://localhost:3005/category/viewall',{
+      axios.get('http://localhost:3005/department/allDepartments',{
           headers:{
               'x-auth':localStorage.getItem('token')
           }
       })
 
       .then((response)=>{
-          console.log(response,'in category')
+          //console.log(response,'in category')
           this.setState(()=>({
-              categories:response.data
+              departmentArray:response.data
               
           }))
     })
+
+    axios.get('http://localhost:3005/users/allUsers',{
+          headers:{
+              'x-auth':localStorage.getItem('token')
+          }
+      })
+
+      .then((response)=>{
+          //console.log(response,'in category')
+          this.setState(()=>({
+              userArray:response.data
+              
+          }))
+    })
+    }
     handleChange=(e)=>{
         e.persist()
+        //console.log(e)
         this.setState(()=>({
           [e.target.name] : e.target.value   
         }))
@@ -38,22 +55,55 @@ class RequestForm extends React.Component
     handleSubmit=(e)=>{
         e.preventDefault() 
         const formData={
-            name : this.state.name,
-            department : this.state.department,
-            priority : this.state.priority,
-            message : this.state.message,
-            notice : ''
-    }
+            createdBy : this.state.createdBy,
+            assignedDepartment : this.state.department,
+            assignedUser : this.state.user,
+            message : this.state.message
+        }
+        axios.post(`http://localhost:3005/requestform/create`,formData,{
+        
+            headers:{
+                'x-auth':localStorage.getItem('token')
+
+            }
+        })
+        .then(response => {
+            console.log(response)
+            this.props.history.push('/requestform/pending')
+        })
+
+        this.setState(()=>({
+            createdBy:'',
+            department:'',
+            user:'',
+            message:''
+        }))
+
+        // setTimeout(()=>{
+        //     this.setState(()=>({
+        //         notice : ''
+        //     }))
+
+        // },2000)
+                
+           
+
+      
+
+
+
     }
     render() {
+        //console.log(this.state.departmentArray)
         return(
             <fieldset>
                  <h2 className="formheader">Send the request to another Department </h2>
             <div className="form-group">
                 <form onSubmit={this.handleSubmit} className="formcenter">
+                    
                 <div className="form-row">
                     <div className="form-group col-md-4"></div>
-                    <div className="form-group col-md-4">
+                    {/* <div className="form-group col-md-4">
                     <label className="headerlabel">Username 
                         <input 
                         type="text" 
@@ -65,16 +115,38 @@ class RequestForm extends React.Component
                         //    className="form-control"
                         />
                     </label>
+                    </div> */}
+
+                {/* <div className="form-group col-md-4"></div>
+                    <div className="form-group col-md-4"></div> */}
+                    <div className="form-group col-md-2">
+                    <label className="headerlabel">Created by user
+                        <select name="createdBy" value={this.state.createdBy} onChange={this.handleChange} className="form-control">
+                            <option value="" >Select</option>
+                            {this.state.userArray.map((user)=>{
+                                
+
+                            return <option key={user._id}
+                            value={user._id}>{user.username}</option>
+                        })}
+                        </select>
+                    </label>
                     </div>
+
+
+
                     <div className="form-group col-md-4"></div>
                     <div className="form-group col-md-4"></div>
                     <div className="form-group col-md-2">
                     <label className="headerlabel">Department(to assign) 
                         <select name="department" value={this.state.department} onChange={this.handleChange} className="form-control">
-                            <option value="">Select</option>
-                            <option value="CS">CS</option>
-                            <option value="ME">ME</option>
-                            <option value="EC">EC</option>
+                            <option value="" >Select</option>
+                            {this.state.departmentArray.map((department)=>{
+                                
+
+                            return <option key={department._id}
+                            value={department._id}>{department.deptName}</option>
+                        })}
                         </select>
                     </label>
                     </div>
@@ -82,9 +154,10 @@ class RequestForm extends React.Component
                     <label className="headerlabel">User (to assign)
                         <select name="user"   value={this.state.user}   onChange={this.handleChange} className="form-control">
                             <option value="">Select</option>
-                            <option value="CS">CS</option>
-                            <option value="ME">ME</option>
-                            <option value="EC">EC</option>
+                            {this.state.userArray.map((user)=>{
+                            return <option key={user._id}
+                            value={user._id}>{user.username}</option>
+                        })}
                         </select>
                     </label>
                     </div>

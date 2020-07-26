@@ -49,7 +49,7 @@ class RequestRejected extends React.Component
             return (
               <tr key ={form._id}>
                 <td> { form.createdBy.username } </td>
-                <td> { form.assignedDepartment.department } </td>
+                <td> { form.assignedDepartment.deptName } </td>
                 <td> { form.assignedUser.username  }</td>
                 <td> { form.message }</td>
                 <td> { form.status }</td>

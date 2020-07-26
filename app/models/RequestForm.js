@@ -15,12 +15,12 @@ const requestFormSchema=new Schema({
     
    assignedDepartment:{
         type:Schema.Types.ObjectId,
-        ref:'User',
+        ref:'Department',
         required:true
     },
     assignedUser:{
-    type:Schema.Types.ObjectId,
-    ref:'User'
+        type:Schema.Types.ObjectId,
+        ref:'User'
     },
     message:{
         type:String,

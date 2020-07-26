@@ -52,6 +52,28 @@ router.delete('/logout', authenticateUser,function(req,res){
     })
 })
 
+router.get('/allUsers', authenticateUser,async function(req,res){
+    
+   
+    let users =await User.find()
+    
+    return res.send(users)
+
+})
+
+router.get('/allUsers',authenticateUser,async function(req,res){
+    
+    let users=[]
+    let allUsers =await User.find()
+    // allUsers.forEach((user)=>{
+    //     users.push(user.username)   
+    // })
+    //users=[...new Set(users)]
+    //console.log(users)
+    return res.send(allUsers)
+
+})
+
 module.exports={
     usersRouter:router
 }

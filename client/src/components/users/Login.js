@@ -30,7 +30,7 @@ class Login extends React.Component {
                     // write this to localStorage 
                     localStorage.setItem('token', response.data.token)
                     // redirect to notes page 
-                    this.props.history.push('/users/account')
+                    this.props.history.push('/requestform/view')
                     // change the navigation links = update the state of isAuthenticated in the parent component
                     this.props.handleAuthentication(true)
                 }

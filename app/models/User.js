@@ -33,8 +33,9 @@ const userSchema=new Schema({
         maxlength:128
     },
     department:{
-        type:String,
+        type:Schema.Types.ObjectId,
         required:true,
+        ref:'Department'
     },
     tokens:[{
         token:{

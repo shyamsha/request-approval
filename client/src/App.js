@@ -7,6 +7,10 @@ import RequestForm from './components/RegisterForm/RequestForm'
 import RequestPending from './components/RegisterForm/RequestPending'
 import RequestApproved from './components/RegisterForm/RequestApproved'
 import RequestRejected from './components/RegisterForm/RequestRejected'
+import ForApproval from './components/RegisterForm/ForApproval'
+
+import RequestFormShow from './components/RegisterForm/RequestFormShow'
+import RequestFormEdit from './components/RegisterForm/RequestFormEdit'
 
 import axios from 'axios'
 
@@ -89,6 +93,10 @@ class App extends React.Component{
           <Route path='/requestform/pending' component={RequestPending}/>
           <Route path='/requestform/approved' component={RequestApproved}/>
           <Route path='/requestform/rejected' component={RequestRejected}/>
+          <Route path='/requestform/for-approval' component={ForApproval}/>
+
+          {/* <Route path="/requestform/edit/:id" component={RequestFormEdit}/> */}
+          {/* <Route path="/requestform/:id" component={RequestFormShow} /> */}
           
           <Route path="/users/logout" render={(props) => {
               axios.delete('http://localhost:3005/users/logout', {
